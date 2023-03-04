@@ -1,0 +1,11 @@
+opencv-python
+argparse
+urllib3
+numpy
+mss
+Pillow
+bluepy
+pygatt
+apscheduler
+pexpect
+Flask

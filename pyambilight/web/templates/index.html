@@ -1,0 +1,90 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>PyAmbi panel</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwindcss.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/spectrum.min.css') }}">
+
+    </head>
+
+    <body class="font-sans bg-gray-200 leading-normal tracking-normal">
+
+        <nav class="bg-white shadow">
+            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div class="relative flex items-center justify-between h-16">
+                    <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                        <div class="flex-shrink-0 flex items-center">
+                            <p class="font-semibold text-2xl">PyAmbi</p>
+                        </div>
+                    </div>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 cursor-pointer">
+                        <i class="fas fa-sun fa-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto px-4 mt-5">
+            <div class="grid grid-cols-12 gap-4">
+                <div class="bg-white col-span-12 md:col-span-12 p-6 rounded-lg shadow">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-800">Led device</h2>
+                    <div class="flex">
+                        <select id="device-to-connect" class="w-full h-10 pl-3 pr-6 placeholder-gray-200 border rounded-lg cursor-pointer focus:outline-none" placeholder="Choose a led device">
+                            <option value="device1">Device 1</option>
+                            <option value="device2">Device 2</option>
+                            <option value="device3">Device 3</option>
+                        </select>
+                        {% if deviceConnected %}
+                            <div id="connect-device" class="bg-red-500 text-white ml-5 p-2 rounded-lg cursor-pointer">
+                                Disconnect
+                            </div>
+                        {% else %}
+                            <div id="disconnect-device" class="bg-purple-600 text-white ml-5 p-2 rounded-lg cursor-pointer">
+                                Connect
+                            </div>
+                        {% endif %}
+                            <!--<div id="connection-spinner" class="hidden bg-green-400 text-white ml-5 p-2 rounded-lg cursor-pointer">
+                                <div class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div>
+                            </div>-->
+                    </div>
+                </div>
+                {% if not deviceConnected %}
+                    <div class="bg-white col-span-12 md:col-span-6 p-6 rounded-lg shadow">
+                        <h2 class="text-2xl font-bold mb-2 text-gray-800">Color</h2>
+                        <input type="text" id="color-picker" value="#276cb8" class="w-full px-4 py-2 focus:outline-none rounded-lg">
+                    </div>
+                    <div class="bg-white col-span-12 md:col-span-6 p-6 rounded-lg shadow">
+                        <h2 class="text-2xl font-bold mb-2 text-gray-800">Stream</h2>
+                        <p class="text-gray-400">Stream your screen color to your led device</p>
+                        {% if stream %}
+                            <div id="stop-stream" class="bg-red-500 text-white max-w-full sm:max-w-xs text-center mt-3 p-2 rounded-lg cursor-pointer">
+                                Stop
+                            </div>
+                        {% else %}
+                            <div id="start-stream" class="bg-purple-600 text-white max-w-full sm:max-w-xs text-center mt-3 p-2 rounded-lg cursor-pointer">
+                                Start
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="bg-white col-span-12 p-6 rounded-lg shadow">
+                        <span class="text-gray-400">Please connect to a led device.</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/spectrum.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/additional.js') }}"></script>
+
+    </body>
+</html>
