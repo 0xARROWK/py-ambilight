@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# File name          : ble_led
-# Author             : Noewen
-# Date created       : 20/02/2021
-# Date last modified : 10/09/2021
-# Python Version     : 3.*
+
+import asyncio
 
 from bluepy.btle import Peripheral
 
@@ -20,9 +17,10 @@ def color(hexa):
     return [0x7e, 0x07, 0x05, 0x03, int(hexa[0:2], 16), int(hexa[2:4], 16), int(hexa[4:6], 16), 0x00, 0xef]
 
 
-class Led:
+class LinuxLed:
     currentColor = '#FF00FF'
     currentBrightness = 100
+
 
     def __init__(self, address, uuid, characteristic):
         self.uuid = uuid
@@ -35,15 +33,18 @@ class Led:
         self.set_brightness(self.currentBrightness)
         self.set_color(self.currentColor)
 
+
     # Set brightness intensity in percent
-    def set_brightness(self, b):
+    async def set_brightness(self, b):
         self.currentBrightness = b
         self.device.write(bytearray(brightness(b)))
 
+
     # Set color in hexadecimal format (ex: #FF00FF)
-    def set_color(self, c):
+    async def set_color(self, c):
         self.currentColor = c
         self.device.write(bytearray(color(c)))
 
-    def stop(self):
+
+    async def stop(self):
         self.peripheral.disconnect()

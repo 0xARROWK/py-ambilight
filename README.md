@@ -15,6 +15,18 @@ sudo apt-get install python3 python3-pip python3-venv libglib2.0-dev
 > pip install -r requirements.txt
 ```
 
+## Run program on linux 
+
+```shell
+nice -19 python3 main.py
+```
+
+## Run program on windows
+
+```shell
+START /REALTIME python3 main.py
+```
+
 ## Contributions
 
 

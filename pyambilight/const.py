@@ -13,12 +13,12 @@ OS = platform.uname()[0]
 GO_VERSION_REQUIRED = "go1.15.8"
 
 # Go download url for each platform
-GO_LINUX_DOWNLOAD_URL = "https://golang.org/dl/" + GO_VERSION_REQUIRED + ".linux-amd64.tar.gz"
-GO_DARWIN_DOWNLOAD_URL = "https://golang.org/dl/" + GO_VERSION_REQUIRED + ".darwin-amd64.pkg"
-GO_WINDOWS_DOWNLOAD_URL = "https://golang.org/dl/" + GO_VERSION_REQUIRED + ".windows-amd64.msi"
+GO_LINUX_DOWNLOAD_URL = "https://go.dev/dl/" + GO_VERSION_REQUIRED + ".linux-amd64.tar.gz"
+GO_DARWIN_DOWNLOAD_URL = "https://go.dev/dl/" + GO_VERSION_REQUIRED + ".darwin-amd64.tar.gz"
+GO_WINDOWS_DOWNLOAD_URL = "https://go.dev/dl/" + GO_VERSION_REQUIRED + ".windows-amd64.zip"
 
 # Schemer2 repository information
-SCHEMER2_REPOSITORY = "github.com/0xARK/schemer2"
+SCHEMER2_REPOSITORY = "github.com/0xARROWK/schemer2"
 
 # basic command for run pyambi project
 RUN_PYAMBI = "python3 pyambi.py"

@@ -18,6 +18,7 @@ from .utils import rgb_to_hex, get_colorscheme, get_brightest_color, palette
 def test_fps():
     """Test image processing performance."""
     fps = []
+    time_array = []
 
     with mss() as sct:
 
@@ -55,14 +56,19 @@ def test_fps():
             rgb, hex = get_brightest_color(rgb)
 
             # fps calculation
-            fps.append(1 / (time.time() - last_time))
+            taken_time = time.time() - last_time
+            fps.append(1 / taken_time)
+            time_array.append(taken_time)
 
     fps = np.array(fps)
-    median = np.median(a=fps)
-    logging.info("Median fps : {:.2f}".format(np.median(a=fps)))
-    if median < 10:
+    fps_median = np.median(a=fps)
+    time_array = np.array(time_array)
+    time_median = np.median(a=time_array)
+    logging.info("Median time : {:.2f}ms".format(time_median*1000))
+    logging.info("Median fps : {:.2f}".format(fps_median))
+    if fps_median < 10:
         logging.error("The image processing is too slow. Please use a different configuration.")
-    elif median < 15:
+    elif fps_median < 15:
         logging.warning("Be careful, image processing is very slow. The colours will not change in real time. Change "
                         "the configuration to improve the processing time.")
     else:
@@ -151,3 +157,4 @@ def run_performance_tests():
     logging.info("Start test of color detection.")
     print()
     test_color()
+    # test_palette()

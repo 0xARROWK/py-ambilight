@@ -48,7 +48,36 @@ def install_go_darwin(url):
 
 
 def install_go_windows(url):
-    pass
+    """Check for go language version on windows and install it."""
+    logging.info("Version 1.15.8 of go language is required and will be installed locally.")
+    logging.info("Download in progress, please wait.")
+
+    if not os.path.isdir('./lib'):
+        os.mkdir('lib')
+
+    if os.path.isfile('./lib/go/bin/go.exe'):
+
+        logging.info(subprocess.check_output(['./lib/go/bin/go', 'version']).decode("utf-8").replace('\n', ''))
+        logging.info("Go language version 1.15.8 has already been downloaded and installed.")
+
+    elif os.path.isfile('./lib/go1.15.8.windows-amd64.zip'):
+
+        logging.info("The file has already been downloaded.")
+        logging.info("Start installation.")
+        subprocess.check_output(['tar', '-C', './lib', '-xzf',
+                                 './lib/' + GO_VERSION_REQUIRED + '.windows-amd64.zip'])
+        logging.info(subprocess.check_output(['./lib/go/bin/go', 'version']).decode("utf-8").replace('\n', ''))
+        logging.info("Installation of version 1.15.8 finished.")
+
+    else:
+
+        urllib.request.urlretrieve(url, './lib/go1.15.8.windows-amd64.zip')
+        logging.info("Download finished.")
+        logging.info("Start installation.")
+        subprocess.check_output(['tar', '-C', './lib', '-xzf',
+                                 './lib/' + GO_VERSION_REQUIRED + '.windows-amd64.zip'])
+        logging.info(subprocess.check_output(['./lib/go/bin/go', 'version']).decode("utf-8").replace('\n', ''))
+        logging.info("Installation of version 1.15.8 finished.")
 
 
 def install_go():
@@ -58,9 +87,9 @@ def install_go():
     if OS == 'Linux':
         install_go_linux(GO_LINUX_DOWNLOAD_URL)
     # elif OS == 'Darwin':
-    #     install_go_darwin(const.GO_DARWIN_DOWNLOAD_URL)
-    # elif OS == "Windows":
-    #     install_go_windows(const.GO_WINDOWS_DOWNLOAD_URL)
+    #     install_go_darwin(GO_DARWIN_DOWNLOAD_URL)
+    elif OS == "Windows":
+        install_go_windows(GO_WINDOWS_DOWNLOAD_URL)
     else:
         logging.error("Sorry, this OS is not currently supported.")
 
@@ -72,7 +101,7 @@ def install_schemer2():
 
     cwd = SCHEMER2_REPOSITORY
 
-    if not os.path.isdir('./lib/src/' + cwd) or not os.path.isfile('./lib/bin/schemer2'):
+    if not os.path.isdir('./lib/src/' + cwd) and not os.path.isfile('./lib/bin/schemer2'):
         subprocess.check_output(['./lib/go/bin/go', 'get', cwd])
         logging.info("Download and installation finished")
     else:
@@ -104,8 +133,8 @@ def setup():
     else:
         gopath_backup = ""
 
-    os.environ['GOROOT'] = subprocess.check_output(['pwd']).decode("utf-8").replace('\n', '') + '/lib/go'
-    os.environ['GOPATH'] = subprocess.check_output(['pwd']).decode("utf-8").replace('\n', '') + '/lib'
+    os.environ['GOROOT'] = os.getcwd() + '/lib/go'
+    os.environ['GOPATH'] = os.getcwd() + '/lib'
 
     print()
     logging.info("Installing dependency, step 1 of 3.\n")

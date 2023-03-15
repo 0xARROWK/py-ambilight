@@ -13,7 +13,9 @@
 # # # # # # # # # # # # # # # # # # # # # #
 
 import argparse
+import asyncio
 import sys
+import nest_asyncio
 
 from pyambilight import *
 
@@ -72,7 +74,7 @@ def parse_args_exit(parser):
         sys.exit(0)
 
 
-def parse_args(parser):
+async def parse_args(parser):
     """Process args."""
     args = parser.parse_args()
 
@@ -83,10 +85,10 @@ def parse_args(parser):
         web.launch_app()
 
     if args.run:
-        stream()
+        await stream()
 
 
-def main():
+async def main():
     """Main script function."""
     logging.basicConfig(format=("[%(levelname)s\x1b[0m] "
                                 "\x1b[1;31m%(module)s\x1b[0m: "
@@ -100,8 +102,9 @@ def main():
     parser = get_args()
 
     parse_args_exit(parser)
-    parse_args(parser)
+    await parse_args(parser)
 
 
 if __name__ == "__main__":
-    main()
+    nest_asyncio.apply()
+    asyncio.run(main())

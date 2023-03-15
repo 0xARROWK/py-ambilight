@@ -19,7 +19,7 @@ sheight = 1080
 # High value = lower performance but more accurate colour detection
 # Low value = better performance but slightly less accurate colour detection
 # After changing this variable, don't forget to test performance by running pyambi with '-t' parameter.
-resize_base = 50
+resize_base = 540
 
 
 # Possible values :
